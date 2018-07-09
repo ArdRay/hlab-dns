@@ -1,0 +1,12 @@
+version: "3"
+services:
+  unbound:
+    image: alpine:3.8
+    ports:
+      - "53:53/udp"
+      - "53:53"
+    deploy:
+      mode: replicated
+      replicas: 4
+      placement:
+      constraints: [node.role == worker]

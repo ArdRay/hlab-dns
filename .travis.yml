@@ -1,0 +1,12 @@
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - docker build -t hlab-dns architecture/x86
+  - docker run -d hlab-dns
+  - docker ps -a
+
+script:
+  - ps -a 
