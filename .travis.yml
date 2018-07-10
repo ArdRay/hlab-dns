@@ -5,8 +5,7 @@ services:
 
 before_install:
   - docker build -t hlab-dns architecture/x86
-  - docker run -d hlab-dns
-  - docker ps -a
+  - docker run --rm -d --name hlab-dns hlab-dns
 
 script:
-  - ps -a 
+  - docker ps | grep -q hlab-dns
