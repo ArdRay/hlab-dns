@@ -7,6 +7,6 @@ services:
       - "53:53"
     deploy:
       mode: replicated
-      replicas: 1
+      replicas: 2
       placement:
         constraints: [node.role == manager]
