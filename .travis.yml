@@ -24,6 +24,8 @@ script:
 - docker ps | grep -q hlab-dns
 
 deploy:
-- docker login -u _json_key --password-stdin https://gcr.io < keyfile.json
-- docker tag hlab-dns eu.gcr.io/axial-radius-203218/hlab-dns:x86
-- docker push eu.gcr.io/axial-radius-203218/hlab-dns:x86
+  - provider: script
+    script: bash gcr-push.sh
+    skip_cleanup: true
+    on:
+      branch: master
