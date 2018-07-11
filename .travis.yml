@@ -1,6 +1,12 @@
 sudo: required
 services:
 - docker
+env:
+  global:
+  - secure: d4WfI6mv+N5H5k0CdkstJispNzFkfK+GBR2gcKWCF/CQGW8PNygl3pGr+k84fChMeVW905OLzYd/iMln2awJsnpVD6IxvgToeYTunw4JJd1qjwpE84LvoLbj8uIYrhmBJZpJgTfImBbYfT6vs2NC0GzeHeEkzOjahpQ2vv5p7ER52NugguyI5Sh9fK80BVcKdsc7VU4s9mXOPfTZpd1tVBFcjUk6i+dSv8K8t4L/8P4Kwl/7DxKCTpJv/3buADNj/Ju4P1Ien0pSpELb7dFiDicUy7M4RGarAqlJ0Zwg0mb/nEkWK4+pxpT8gyqtbSYhh+CtfSshFNND4r1LbrA7ewQVVnn3/kxqP5jV2lsxmMI3IlGXIxg/RglN+EoJijDShLZ/crVXDI4kVxAOBhqzIupMpMrNq81wFeFz28UDuIJs4gsdw3Khg7so0k/3QweWbtCRASjp5CcmDeri0rbBLMr9XsDcIlZb2J/xuGPvwzwQvoE/R5o3RprAKb9x6dFnGCf6vQru+htDfJ+H1Ske3q1L3dqql3UXKJKxqwPOfGVr/r9Fi5Rml4vPFTJJTy0y1BYspewbiGCT5KHENrUZ5DH1iUVIjun5i/H9Hv7aA4c0b3ymHADl7xNlqAhHZ+892EYM4MBfz0Z/cAtZKOEGkaUpk8z3gYpq3tnf3z1wVPo=
+  - secure: gyb29TlEd72QGQPTUyN51HdX8NlLXF2V/u9Z1vaKLAm/LduMHCWV00+Y1484OJi0iNToVPXeaEo8ifBGprf/a1EFbnkUgD4L32wJOxhSc23XXTXEYZzvbJf9jtby+MccAyuDIw1Ego/FdwgYBkwgymkDTQTZg9Sd3LfGGUmttU0oxMwnpAxqFmmplKJkJ3DDqe0BxRurNcZzos4UVqN1XyhOvK5L1Tg8UWUUK/F7yHbD1yyikEhIEWyrzU4tylFxaUibD5kXXE45ANbbVMN3pbw0s/2zVPcoZqIM7JZeDWWOsJVRGQOSFcnePl36gNAXBchU63kXk6RzR1UHucOC7lXIH2GrG6Y2ML4IrOxFzyYocrw5kllWAlDo+qRhxoWgfva8fE3FT8qeXlF3OdGuL3p9SQ9RgqxWUk2g8UnAM70+Lmm5i+0CxuUCA46Fw8QHI+V+EwycewtNjNtXf33wPiZl3//XnbMo1bBtHqNyq9TfKrfbPj/2J98ImZjHrl/34nP4lxFTv/gvOEudUobmBbILB/0kAQl2FR7Qd1DWLwA4MkqKuXMLkzUa3csuDefss9KymquSnqfnF8wxxD0Q1aH6XrvyCYMtidwd++94S4tikaMlulVnAXGZ0JTpoktl/RZOY+meYm12vyR92824O2kFkh4h0b5xAo824QPRDcA=
+  - SERVICE=dns
+  - PROJECT_ID=axial-radius-203218
 cache:
   directories:
   - "$HOME/google-cloud-sdk/"
@@ -17,9 +23,20 @@ before_install:
 - docker run --rm -d --name hlab-dns hlab-dns
 script:
 - docker ps | grep -q hlab-dns
+
+before_deploy:
+- eval "$(ssh-agent -s)"
+- chmod 600 ssh_key
+- ssh-add ssh_key
+
 deploy:
 - provider: script
   script: bash gcr-push.sh
   skip_cleanup: true
   on:
     branch: master
+- provider: script
+  script: bash swarm-push.sh
+  skip_cleanup: true
+  on:
+    brance: master

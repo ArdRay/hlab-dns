@@ -1,12 +1,12 @@
 version: "3"
 services:
   unbound:
-    image: alpine:3.8
+    image: eu.gcr.io/axial-radius-203218/hlab-dns:x86
     ports:
       - "53:53/udp"
       - "53:53"
     deploy:
       mode: replicated
-      replicas: 4
+      replicas: 1
       placement:
-      constraints: [node.role == worker]
+      constraints: [node.role == manager]
