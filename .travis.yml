@@ -8,7 +8,7 @@ cache:
 
 before_install:
 - openssl aes-256-cbc -K $encrypted_98033c989b97_key -iv $encrypted_98033c989b97_iv -in ssh_key.enc -out ssh_key -d
-- openssl aes-256-cbc -K $encrypted_98033c989b97_key -iv $encrypted_98033c989b97_iv -in json.key.enc -out json.key -d
+- openssl aes-256-cbc -K $encrypted_207aca93b88e_key -iv $encrypted_207aca93b88e_iv -in json.key.enc -out json.key -d
 
 - gcloud version || true
 - if [ ! -d "$HOME/google-cloud-sdk/bin" ]; then rm -rf $HOME/google-cloud-sdk; export CLOUDSDK_CORE_DISABLE_PROMPTS=1; curl https://sdk.cloud.google.com | bash; fi
