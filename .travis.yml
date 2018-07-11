@@ -7,10 +7,12 @@ env:
   - secure: gyb29TlEd72QGQPTUyN51HdX8NlLXF2V/u9Z1vaKLAm/LduMHCWV00+Y1484OJi0iNToVPXeaEo8ifBGprf/a1EFbnkUgD4L32wJOxhSc23XXTXEYZzvbJf9jtby+MccAyuDIw1Ego/FdwgYBkwgymkDTQTZg9Sd3LfGGUmttU0oxMwnpAxqFmmplKJkJ3DDqe0BxRurNcZzos4UVqN1XyhOvK5L1Tg8UWUUK/F7yHbD1yyikEhIEWyrzU4tylFxaUibD5kXXE45ANbbVMN3pbw0s/2zVPcoZqIM7JZeDWWOsJVRGQOSFcnePl36gNAXBchU63kXk6RzR1UHucOC7lXIH2GrG6Y2ML4IrOxFzyYocrw5kllWAlDo+qRhxoWgfva8fE3FT8qeXlF3OdGuL3p9SQ9RgqxWUk2g8UnAM70+Lmm5i+0CxuUCA46Fw8QHI+V+EwycewtNjNtXf33wPiZl3//XnbMo1bBtHqNyq9TfKrfbPj/2J98ImZjHrl/34nP4lxFTv/gvOEudUobmBbILB/0kAQl2FR7Qd1DWLwA4MkqKuXMLkzUa3csuDefss9KymquSnqfnF8wxxD0Q1aH6XrvyCYMtidwd++94S4tikaMlulVnAXGZ0JTpoktl/RZOY+meYm12vyR92824O2kFkh4h0b5xAo824QPRDcA=
   - SERVICE=dns
   - PROJECT_ID=axial-radius-203218
+
 cache:
   directories:
   - "$HOME/google-cloud-sdk/"
-before_install:
+
+  before_install:
 - openssl aes-256-cbc -K $encrypted_98033c989b97_key -iv $encrypted_98033c989b97_iv
   -in secrets.tar.enc -out secrets.tar -d
 - tar xvf secrets.tar
@@ -21,6 +23,7 @@ before_install:
 - gcloud version
 - docker build -t hlab-dns architecture/x86
 - docker run --rm -d --name hlab-dns hlab-dns
+
 script:
 - docker ps | grep -q hlab-dns
 
@@ -39,4 +42,4 @@ deploy:
   script: bash swarm-push.sh
   skip_cleanup: true
   on:
-    brance: master
+    branch: master
