@@ -3,16 +3,19 @@ services:
   unbound:
     image: eu.gcr.io/axial-radius-203218/hlab-dns:x86
     networks:
-      - dns_network
+      - dnet
     ports:
       - "53:53/udp"
       - "53:53"
     deploy:
       mode: replicated
       replicas: 5
+      update_config:
+        parallelism: 1
+        delay: 10s
       placement:
         constraints: [node.role == manager]
 
 networks:
-  dns_network:
+  dnet:
     driver: overlay
