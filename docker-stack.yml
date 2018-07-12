@@ -2,6 +2,8 @@ version: "3"
 services:
   unbound:
     image: eu.gcr.io/axial-radius-203218/hlab-dns:x86
+    networks:
+      - dns_network
     ports:
       - "53:53/udp"
       - "53:53"
@@ -10,3 +12,7 @@ services:
       replicas: 5
       placement:
         constraints: [node.role == manager]
+
+networks:
+  dns_network:
+    driver: overlay
