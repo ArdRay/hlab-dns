@@ -1,4 +1,4 @@
-FROM hypriot/rpi-alpine
+FROM arm32v6/alpine
 RUN apk update
 RUN apk add unbound
 
