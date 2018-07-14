@@ -1,7 +1,7 @@
 version: "3"
 services:
-  unbound:
-    image: eu.gcr.io/axial-radius-203218/hlab-dns:x86
+  unbound_64:
+    image: eu.gcr.io/axial-radius-203218/hlab-dns:amd64
     networks:
       - dnet
     ports:
@@ -9,12 +9,29 @@ services:
       - "53:53"
     deploy:
       mode: replicated
-      replicas: 5
+      replicas: 1
       update_config:
         parallelism: 1
         delay: 10s
       placement:
         constraints: [node.role == manager]
+
+unbound_6:
+    image: eu.gcr.io/axial-radius-203218/hlab-dns:arm6
+    networks:
+      - dnet
+    ports:
+      - "53:53/udp"
+      - "53:53"
+    deploy:
+      mode: replicated
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 10s
+      placement:
+        constraints: [node.role == worker]
+
 
 networks:
   dnet:

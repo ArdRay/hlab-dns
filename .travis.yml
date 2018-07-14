@@ -22,14 +22,14 @@ before_install:
   CLOUDSDK_CORE_DISABLE_PROMPTS=1; curl https://sdk.cloud.google.com | bash; fi
 - source /home/travis/google-cloud-sdk/path.bash.inc
 - gcloud version
-- cp config/unbound.conf architecture/x86/unbound.conf
-- cp config/unbound.conf architecture/arm/unbound.conf
-- docker build -t hlab-dns:x86 architecture/x86
-- docker build -t hlab-dns:arm architecture/arm
+- cp config/unbound.conf architecture/amd64/unbound.conf
+- cp config/unbound.conf architecture/arm6/unbound.conf
 script:
-- docker run --rm -d --name hlab-dns-64 hlab-dns:x86
+- docker build -t hlab-dns:amd64 architecture/amd64
+- docker run --rm -d --name hlab-dns-amd64 hlab-dns:amd64
 - docker run --rm --privileged multiarch/qemu-user-static:register --reset
-- docker run --rm -d --name hlab-dns-arm hlab-dns:arm
+- docker build -t hlab-dns:armv6 architecture/arm6
+- docker run --rm -d --name hlab-dns-arm6 hlab-dns:arm6
 before_deploy:
 - cat known_hosts >> $HOME/.ssh/known_hosts
 - eval "$(ssh-agent -s)"
