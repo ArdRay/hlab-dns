@@ -27,7 +27,7 @@ before_install:
 script:
 - docker build -t hlab-dns:amd64 architecture/amd64
 - docker run --rm -d --name hlab-dns-amd64 hlab-dns:amd64
-- docker run --rm --privileged multiarch/qemu-user-static:register --reset
+- docker run --rm --privileged multiarch/qemu-user-static:register
 - docker build -t hlab-dns:arm6 architecture/arm6
 - docker run --rm -d --name hlab-dns-arm6 hlab-dns:arm6
 before_deploy:
