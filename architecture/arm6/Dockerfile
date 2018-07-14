@@ -1,4 +1,4 @@
-FROM multiarch/debian-debootstrap:armel-stretch
+FROM multiarch/debian-debootstrap:armhf-stretch
 RUN apt-get update && apt-get upgrade -y
 RUN apt-get install unbound -y
 
