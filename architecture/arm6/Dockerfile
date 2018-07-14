@@ -1,6 +1,6 @@
-FROM arm32v6/alpine
-RUN apk update
-RUN apk add unbound
+FROM multiarch/debian-debootstrap:armel-wheezy
+RUN apt update
+RUN apt install unbound
 
 COPY unbound.conf /etc/unbound/unbound.conf
 
