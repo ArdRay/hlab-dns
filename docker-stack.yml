@@ -1,12 +1,14 @@
-version: "3"
+version: "3.2"
 services:
-  unbound_64:
+  unbound_amd64:
     image: eu.gcr.io/axial-radius-203218/hlab-dns:amd64
     networks:
       - dnet
     ports:
-      - "53:53/udp"
-      - "53:53"
+      - target: 53
+        published: 53
+        protocol: udp
+        mode: host
     deploy:
       mode: replicated
       replicas: 1
@@ -16,13 +18,15 @@ services:
       placement:
         constraints: [node.role == manager]
 
-  unbound_6:
+  unbound_armel:
     image: eu.gcr.io/axial-radius-203218/hlab-dns:arm6
     networks:
       - dnet
     ports:
-      - "53:53/udp"
-      - "53:53"
+      - target: 53
+        published: 53
+        protocol: udp
+        mode: host
     deploy:
       mode: replicated
       replicas: 1
