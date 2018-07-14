@@ -28,6 +28,7 @@ script:
 - docker build -t hlab-dns:amd64 architecture/amd64
 - docker run --rm -d --name hlab-dns-amd64 hlab-dns:amd64
 - docker run --rm --privileged multiarch/qemu-user-static:register
+- echo ':arm:M::\x7fELF\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x28\x00:\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff:/usr/local/bin/qemu-arm-static:' > /proc/sys/fs/binfmt_misc/register
 - docker build -t hlab-dns:arm6 architecture/arm6
 - docker run --rm -d --name hlab-dns-arm6 hlab-dns:arm6
 before_deploy:
