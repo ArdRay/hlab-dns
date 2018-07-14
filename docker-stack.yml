@@ -16,7 +16,7 @@ services:
       placement:
         constraints: [node.role == manager]
 
-unbound_6:
+  unbound_6:
     image: eu.gcr.io/axial-radius-203218/hlab-dns:arm6
     networks:
       - dnet
