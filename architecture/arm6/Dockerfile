@@ -1,6 +1,6 @@
 FROM multiarch/debian-debootstrap:armel-wheezy
-RUN apt update
-RUN apt install unbound
+RUN apt-get update && apt-get upgrade -y
+RUN apt-get install unbound -y
 
 COPY unbound.conf /etc/unbound/unbound.conf
 
